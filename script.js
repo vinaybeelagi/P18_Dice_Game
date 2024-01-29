@@ -200,3 +200,35 @@ rulesBtn.addEventListener("click", () => {
   }
 });
 
+// Event listener for the "Keep Score" button
+keepScoreBtn.addEventListener("click", () => {
+  let selectedValue;
+  let achieved;
+
+  // Find the selected radio option
+  for (const radioButton of scoreInputs) {
+    if (radioButton.checked) {
+      selectedValue = radioButton.value;
+      achieved = radioButton.id;
+      break;
+    }
+  }
+
+  // Update game stats and scores based on the selected option
+  if (selectedValue) {
+    rolls = 0;
+    round++;
+    updateStats();
+    resetRadioOption();
+    updateScore(selectedValue, achieved);
+    if (round > 6) {
+      // Display game over message and reset the game after a delay
+      setTimeout(() => {
+        alert(`Game Over! Your total score is ${totalScore}`);
+        resetGame();
+      }, 500);
+    }
+  } else {
+    alert("Please select an option or roll the dice");
+  }
+});
