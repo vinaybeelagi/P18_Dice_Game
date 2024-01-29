@@ -84,4 +84,56 @@ const getHighestDuplicates = (arr) => {
 
   const sumOfAllDice = diceValuesArr.reduce((a, b) => a + b, 0);
 
-  
+  // Update radio options based on the highest counts
+  if (highestCount >= 4) {
+    updateRadioOption(1, sumOfAllDice);
+  }
+
+  if (highestCount >= 3) {
+    updateRadioOption(0, sumOfAllDice);
+  }
+
+  updateRadioOption(5, 0);
+};
+
+// Function to identify and update scores for a full house
+const detectFullHouse = (arr) => {
+  const counts = {};
+
+  // Count occurrences of each number in the array
+  for (const num of arr) {
+    counts[num] = counts[num] ? counts[num] + 1 : 1;
+  }
+
+  const hasThreeOfAKind = Object.values(counts).includes(3);
+  const hasPair = Object.values(counts).includes(2);
+
+  // Update radio options based on the presence of a full house
+  if (hasThreeOfAKind && hasPair) {
+    updateRadioOption(2, 25);
+  }
+
+  updateRadioOption(5, 0);
+};
+
+// Function to identify and update scores for straights
+const checkForStraights = (arr) => {
+  const sortedNumbersArr = arr.sort((a, b) => a - b);
+  const uniqueNumbersArr = [...new Set(sortedNumbersArr)];
+  const uniqueNumbersStr = uniqueNumbersArr.join("");
+
+  const smallStraightsArr = ["1234", "2345", "3456"];
+  const largeStraightsArr = ["12345", "23456"];
+
+  // Update radio options based on the presence of straights
+  if (smallStraightsArr.includes(uniqueNumbersStr)) {
+    updateRadioOption(3, 30);
+  }
+
+  if (largeStraightsArr.includes(uniqueNumbersStr)) {
+    updateRadioOption(4, 40);
+  }
+
+  updateRadioOption(5, 0);
+};
+
