@@ -48,3 +48,40 @@ const updateRadioOption = (optionNode, score) => {
   scoreSpans[optionNode].textContent = `, score = ${score}`;
 };
 
+// Function to update the total score and display score history
+const updateScore = (selectedValue, achieved) => {
+  totalScore += parseInt(selectedValue);
+  totalScoreText.textContent = totalScore;
+
+  scoreHistory.innerHTML += `<li>${achieved} : ${selectedValue}</li>`;
+};
+
+// Function to identify and update scores for highest duplicates
+const getHighestDuplicates = (arr) => {
+  const counts = {};
+
+  // Count occurrences of each number in the array
+  for (const num of arr) {
+    if (counts[num]) {
+      counts[num]++;
+    } else {
+      counts[num] = 1;
+    }
+  }
+
+  let highestCount = 0;
+
+  // Find the highest count of any number
+  for (const num of arr) {
+    const count = counts[num];
+    if (count >= 3 && count > highestCount) {
+      highestCount = count;
+    }
+    if (count >= 4 && count > highestCount) {
+      highestCount = count;
+    }
+  }
+
+  const sumOfAllDice = diceValuesArr.reduce((a, b) => a + b, 0);
+
+  
