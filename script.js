@@ -137,3 +137,66 @@ const checkForStraights = (arr) => {
   updateRadioOption(5, 0);
 };
 
+// Function to reset radio options after a turn
+const resetRadioOption = () => {
+  scoreInputs.forEach((input) => {
+    input.disabled = true;
+    input.checked = false;
+  });
+
+  scoreSpans.forEach((span) => {
+    span.textContent = "";
+  });
+};
+
+// Function to reset the entire game state
+const resetGame = () => {
+  diceValuesArr = [0, 0, 0, 0, 0];
+  score = 0;
+  totalScore = 0;
+  round = 1;
+  rolls = 0;
+
+  // Reset the displayed values of the dice
+  listOfAllDice.forEach((dice, index) => {
+    dice.textContent = diceValuesArr[index];
+  });
+
+  // Reset various game stats
+  totalScoreText.textContent = totalScore;
+  scoreHistory.innerHTML = "";
+
+  currentRoundRollsText.textContent = rolls;
+  currentRoundText.textContent = round;
+
+  resetRadioOption();
+};
+
+// Event listener for the "Roll Dice" button
+rollDiceBtn.addEventListener("click", () => {
+  if (rolls === 3) {
+    alert("You have made three rolls this round. Please select a score.");
+  } else {
+    rolls++;
+    resetRadioOption();
+    rollDice();
+    updateStats();
+    getHighestDuplicates(diceValuesArr);
+    detectFullHouse(diceValuesArr);
+    checkForStraights(diceValuesArr);
+  }
+});
+
+// Event listener for the "Show/Hide Rules" button
+rulesBtn.addEventListener("click", () => {
+  isModalShowing = !isModalShowing;
+
+  if (isModalShowing) {
+    rulesBtn.textContent = "Hide Rules";
+    rulesContainer.style.display = "block";
+  } else {
+    rulesBtn.textContent = "Show Rules";
+    rulesContainer.style.display = "none";
+  }
+});
+
