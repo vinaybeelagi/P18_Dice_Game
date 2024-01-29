@@ -29,4 +29,22 @@ const rollDice = () => {
     diceValuesArr.push(randomDice);
   }
 
-  
+  // Update the displayed values of the dice
+  listOfAllDice.forEach((dice, index) => {
+    dice.textContent = diceValuesArr[index];
+  });
+};
+
+// Function to update various game stats
+const updateStats = () => {
+  currentRoundRollsText.textContent = rolls;
+  currentRoundText.textContent = round;
+};
+
+// Function to update a radio option with a given score
+const updateRadioOption = (optionNode, score) => {
+  scoreInputs[optionNode].disabled = false;
+  scoreInputs[optionNode].value = score;
+  scoreSpans[optionNode].textContent = `, score = ${score}`;
+};
+
